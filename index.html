@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<title>Projeto De Diversidade</title>
+<style>
+  /* ===== Reset básico ===== */
+  :root{
+    --bg:#05050a;
+    --panel:#0b0b12;
+    --neon1:#00ffdd;
+    --neon2:#ff55d0;
+    --accent:#ffd166;
+    --glass: rgba(255,255,255,0.04);
+    --mono: "Courier New", Courier, monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background:
+      radial-gradient(1200px 600px at 10% 10%, rgba(0,255,221,0.03), transparent 6%),
+      radial-gradient(800px 400px at 90% 80%, rgba(255,85,208,0.03), transparent 6%),
+      var(--bg);
+    color:#e6eef5;
+    padding:24px;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+
+  /* ===== Container ===== */
+  .wrap{
+    max-width:1200px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns: 1fr 360px;
+    gap:20px;
+    align-items:start;
+  }
+
+  /* ===== Header ===== */
+  header{
+    grid-column: 1 / -1;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    margin-bottom:8px;
+  }
+  .logo{
+    font-family: var(--mono);
+    letter-spacing:1px;
+    font-weight:700;
+    color:var(--neon1);
+    text-shadow:
+      0 0 8px rgba(0,255,221,0.14),
+      0 0 20px rgba(0,255,221,0.06);
+    display:flex;
+    flex-direction:column;
+  }
+  .logo small{font-size:12px;color:#94f7e6;opacity:0.8}
+
+  /* ===== Main cards ===== */
+  main{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); padding:14px; border-radius:12px; box-shadow: 0 6px 30px rgba(0,0,0,0.6)}
+  .cards{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap:14px;
+  }
+  .card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.04);
+    padding:16px;
+    border-radius:10px;
+    position:relative;
+    overflow:hidden;
+    min-height:180px;
+  }
+  .card::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background-image: linear-gradient(90deg, rgba(255,255,255,0.012), transparent 25%, rgba(255,255,255,0.012) 50%);
+    opacity:0.06;
+    pointer-events:none;
+    transform:skewX(-10deg);
+  }
+  .card h2{
+    font-family:var(--mono);
+    margin-bottom:8px;
+    color:var(--neon2);
+    text-shadow: 0 0 8px rgba(255,85,208,0.07);
+  }
+  .pill{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:999px;
+    background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.03);
+    font-size:13px;
+    margin-bottom:8px;
+    color:#dfefff;
+  }
+  .section{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .sub{
+    flex:1 1 220px;
+    min-width:160px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+    padding:10px;
+    border-radius:8px;
+    border:1px dashed rgba(255,255,255,0.03);
+    font-size:14px;
+    line-height:1.35;
+  }
+  .sub strong{display:block;margin-bottom:6px;color:var(--accent)}
+
+  /* ===== Side panel (Dados ONU) ===== */
+  aside{
+    background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent);
+    border-radius:12px;
+    padding:14px;
+    border:1px solid rgba(255,255,255,0.04);
+    height:fit-content;
+  }
+  .data-title{
+    font-family:var(--mono);
+    color:var(--neon1);
+    margin-bottom:10px;
+  }
+  .stat{
+    background:var(--glass);
+    padding:10px;
+    border-radius:8px;
+    margin-bottom:10px;
+    font-size:13px;
+  }
+  .cite{font-size:11px;color:#a7b8c8;opacity:0.9;margin-top:6px}
+
+  /* ===== Footer / small ===== */
+  footer{grid-column:1 / -1; margin-top:18px; color:#9fb0c8; font-size:13px; text-align:center;}
+
+  /* ===== Retropunk accent lines ===== */
+  .neon-line{
+    height:6px;
+    border-radius:6px;
+    background: linear-gradient(90deg, var(--neon2), var(--neon1));
+    box-shadow: 0 0 24px rgba(255,85,208,0.08);
+    margin:10px 0 18px 0;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width:980px){
+    .wrap{grid-template-columns: 1fr; padding:12px}
+    aside{order:2}
+  }
+
+  /* ===== Tiny scanline animation (subtle) ===== */
+  @keyframes scan {
+    0%{opacity:0.03}
+    50%{opacity:0.06}
+    100%{opacity:0.03}
+  }
+  .card::before{
+    content:'';position:absolute; inset:0;background:linear-gradient(180deg, rgba(255,255,255,0.0), rgba(255,255,255,0.01)); mix-blend-mode:overlay; pointer-events:none; animation:scan 6s linear infinite;
+  }
+
+  /* ===== small utilities ===== */
+  ul{padding-left:18px}
+  .muted{color:#9fb0c8;font-size:13px}
+  .btn{
+    display:inline-block;padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;font-weight:600;color:#e8faff;margin-top:8px;text-decoration:none
+  }
+
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">
+        <div style="font-size:18px">Projeto Diversidade</div>
+        <small>Projetos urbanos • educação • inclusão</small>
+      </div>
+      
+    </header>
+
+    <main>
+      <div class="neon-line"></div>
+
+      <div class="cards">
+        <!-- Desafio 1 -->
+        <article class="card" id="desafio1">
+          <h2>Desafio 1 — Cidade do Futuro Sustentável</h2>
+          <span class="pill">Visão</span>
+          <p class="muted">Uma cidade 100% sustentável e inclusiva: mobilidade elétrica compartilhada, moradias modulares acessíveis, energia renovável distribuída, agricultura urbana e espaços públicos intergeracionais.</p>
+
+          <div class="section" style="margin-top:10px">
+            <div class="sub">
+              <strong>Transporte</strong>
+              Rede multimodal — ônibus elétricos em BRT de baixa emissão; ciclovias elevadas e calçadas "nível 0" para mobilidade assistida; hubs de micro-mobilidade com veículos adaptados e transporte sob demanda para idosos e PCDs.
+            </div>
+            <div class="sub">
+              <strong>Moradia & Inclusão</strong>
+              Complexos modulares com unidades adaptáveis (rampa, portas largas, banheiros universais). Mistura de moradias sociais e cooperativas, subsídios para idosos e famílias com crianças.
+            </div>
+            <div class="sub">
+              <strong>Energia & Resiliência</strong>
+              Microgrids solares + armazenamento comunitário; contratos de energia comunitária e tarifas sociais; recuperação de calor em distritos e gestão de água circular.
+            </div>
+          </div>
+
+          <div class="section" style="margin-top:12px">
+            <div class="sub">
+              <strong>Alimentação</strong>
+              Hortas verticais nas fachadas, mercados locais com cadeia curta, programa de distribuição solidária para populações vulneráveis.
+            </div>
+            <div class="sub">
+              <strong>Lazer & Convivência</strong>
+              Praças modulares para festivais e encontros intergeracionais, bibliotecas comunitárias 24/7, centros de tecnologia com acessibilidade digital.
+            </div>
+          </div>
+        </article>
+
+        <!-- Desafio 2 -->
+        <article class="card" id="desafio2">
+          <h2>Desafio 2 — A Escola Perfeita para Jovens Aprendizes</h2>
+          <span class="pill">Visão</span>
+          <p class="muted">Escola híbrida, orientada a projetos reais, com trilhas de aprendizagem personalizadas e vínculo institucional com empresas locais e cooperativas.</p>
+
+          <div class="section" style="margin-top:10px">
+            <div class="sub">
+              <strong>Currículo</strong>
+              Blocos: 1) Competências técnicas (oficinas, laboratórios); 2) "Life Skills" (gestão pessoal, finanças, saúde mental); 3) Empreendedorismo e cidadania; 4) Cultura e línguas.
+            </div>
+            <div class="sub">
+              <strong>Ambiente físico</strong>
+              Espaços flexíveis: oficinas maker, estúdios, salas sensoriais, áreas de estágio simuladas. Acessibilidade total (acesso auditivo, visual, físico).
+            </div>
+            <div class="sub">
+              <strong>Metodologias</strong>
+              Aprendizagem baseada em projetos (PBL), avaliação por portfólios, tutoria entre pares e micro-certificações digitais reconhecidas por empresas parceiras.
+            </div>
+          </div>
+
+          <div class="section" style="margin-top:12px">
+            <div class="sub">
+              <strong>Conexão com empresas</strong>
+              Rede de estágios rotativos, projetos reais remunerados, "sprint days" empresariais e conselhos consultivos com representantes do mercado.
+            </div>
+            <div class="sub">
+              <strong>Medição de impacto</strong>
+              Taxa de empregabilidade, satisfação do aluno, inclusão de PCDs e tempo médio de transição escola → trabalho.
+            </div>
+          </div>
+        </article>
+
+        <!-- Desafio 3 -->
+        <article class="card" id="desafio3">
+          <h2>Desafio 3 — O Evento Inclusivo</h2>
+          <span class="pill">Visão</span>
+          <p class="muted">Festival modular e acessível que celebra cultura local, diversidade e participação ativa — todos os dias, para todos.</p>
+
+          <div class="section" style="margin-top:10px">
+            <div class="sub">
+              <strong>Programação</strong>
+              Palco principal com tradução simultânea / libras; palco de talentos comunitários; oficinas sensoriais para crianças; horários com baixo nível de ruído.
+            </div>
+            <div class="sub">
+              <strong>Acessibilidade</strong>
+              Rotas acessíveis, banheiros e vagas reservadas, audiodescrição e legendagem ao vivo, atendimento para quem tem necessidades alimentares especiais.
+            </div>
+            <div class="sub">
+              <strong>Divulgação</strong>
+              Material em formatos múltiplos (audio, grande contraste, linguagem simples), parcerias com rádios comunitárias e redes de inclusão para alcance amplo.
+            </div>
+          </div>
+
+          <div style="margin-top:12px">
+            <div class="sub" style="width:100%">
+              <strong>Participação & Equidade</strong>
+              Programa de bolsas para artistas de baixa renda, tarifas escalonadas, transporte subsidiado para quem vem de áreas periféricas, comissão de diversidade responsável pela curadoria.
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+    </main>
+
+    <aside>
+      <div class="data-title">Dados / referência (ONU e organismos)</div>
+
+      <div class="stat">
+        <strong>Urbanização</strong>
+        Mais da metade da população mundial vive em áreas urbanas; projeção: ~70% até 2050 — planejamento urbano é crítico. 
+        <div class="cite">Fonte: UN SDG Report (dados de urbanização e projeções). :contentReference[oaicite:0]{index=0}</div>
+      </div>
+
+      <div class="stat">
+        <strong>Condições de habitação</strong>
+        Em 2022 cerca de 24.8% da população urbana vivia em favelas / condições semelhantes — 1.12 bilhões de pessoas afetadas globalmente (alta concentração em Ásia e África Subsaariana). 
+        <div class="cite">Fonte: UN / UN-Habitat. :contentReference[oaicite:1]{index=1}</div>
+      </div>
+
+      <div class="stat">
+        <strong>Educação</strong>
+        Estima-se que até 2030 ~300 milhões de crianças/jovens poderão não ter habilidades básicas de leitura e matemática — desafio para currículos que conectem escola e mercado. 
+        <div class="cite">Fonte: UN SDG Report / UNESCO. :contentReference[oaicite:2]{index=2}</div>
+      </div>
+
+      <div class="stat">
+        <strong>Inclusão e deficiência</strong>
+        Aproximadamente 1.3 bilhões de pessoas têm deficiência significativa (cerca de 16% da população). Políticas inclusivas e acessibilidade são essenciais. 
+        <div class="cite">Fonte: WHO / UN fact sheets. :contentReference[oaicite:3]{index=3}</div>
+      </div>
+
+      <a class="btn" href="#desafio1">Abrir plano da cidade</a>
+      <a class="btn" href="#desafio2" style="margin-left:8px">Abrir escola</a>
+    </aside>
+
+    <footer>
+      Dados citados acima vêm de relatórios e painéis da ONU/UNESCO/WHO.
+    </footer>
+  </div>
+</body>
+</html>
